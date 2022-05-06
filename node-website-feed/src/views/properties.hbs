@@ -1,0 +1,66 @@
+<html lang='en'>
+
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link href='elements/index.css' rel='stylesheet' type='text/css' />
+    <title>Properties Demo Feed</title>
+  </head>
+
+  <body>
+    <div class='el-page-container'>
+      <h1 class='el-title'>Properties Demo Feed</h1>
+      <div class='el-grid'>
+        {{#each properties}}
+          <div class='el-col'>
+            <div class='el-card-wrap'>
+              <div class='el-card-main-wrap'>
+                <div class='el-card-image-wrap'>
+                  {{#if this._embedded.images.0.url}}
+                    <img src='{{this._embedded.images.0.url}}' class='card-img-top' />
+                  {{else}}
+                    <img
+                      src='https://via.placeholder.com/56x56?text=Image+not+supplied+by+agent'
+                      class='card-img-top'
+                    />
+                  {{/if}}
+                </div>
+                <div class='el-card-heading-wrap'>
+                  <h5 class='el-card-heading'>{{#if this.address.buildingNumber}}
+                      {{this.address.buildingNumber}},
+                    {{/if}}
+                    {{#if this.address.buildingName}}
+                      {{this.address.buildingName}},
+                    {{/if}}
+                    {{#if this.address.line1}}
+                      {{this.address.line1}},
+                    {{/if}}
+                    {{#if this.address.line2}}
+                      {{this.address.line2}},
+                    {{/if}}
+                    {{this.address.postcode}}</h5>
+                  <h6 class='el-card-sub-heading'>
+                    {{#if this.selling.price}}
+                      £{{this.selling.price}}
+                    {{else}}
+                      Price on application
+                    {{/if}}
+                  </h6>
+                </div>
+              </div>
+              <div class='el-card-body-wrap-expanded el-card-body-wrap'>
+                {{#if this.summary}}
+                  <p class='card-text'>{{this.summary}}</p>
+                {{else}}
+                  <p class='card-text'>No summary available</p>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </body>
+
+</html>
