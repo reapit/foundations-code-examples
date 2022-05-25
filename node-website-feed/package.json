@@ -10,7 +10,7 @@
   "author": "wmcvay@reapit.com",
   "license": "MIT",
   "dependencies": {
-    "@reapit/connect-session": "^4.0.1",
+    "@reapit/connect-session": "^4.0.2",
     "@reapit/elements": "^3.8.2",
     "axios": "^0.27.2",
     "dotenv": "^16.0.0",
