@@ -61,7 +61,7 @@ The following query will fetch the property images where;
 - The `propertyId` values (represented as foo, bar & baz), are the ids of the properties in your DB. You should break the query into batches of 100 propertyIds at a time to avoid timeouts and use paging to return all images changed.
 
 ```ts
-'https://platform.reapit.cloud/propertyImages?propertyId=foo&propertyId=bar&propertyId=baz&pageSize=100&pageNumber=1&modifiedFrom=2022-05-26T10:38:06.581'
+'https://platform.reapit.cloud/propertyImages?propertyId=foo&propertyId=bar&propertyId=baz&pageSize=100&pageNumber=1&modifiedFrom=2022-05-26T10:38:06.581Z'
 ```
 
 In both cases, when you have received your updated properties, you should update the corresponding records in your database.
@@ -110,7 +110,7 @@ h = hours in day running scheduled job = 24
 
 
 Calculation Scheduled Calls Per Month: ((c / n) + ((p / n) * (i / n)) * h ) * d
-Calculation Monthly Housekeeping Calls: (p / n) * b
+Calculation Monthly Housekeeping Calls: (p / n) * d
 
 Scheduled Calls Per Month: ((100 / 100) + ((700 / 100) * (100 / 100)) * 24) * 31 = 5952 API Calls
 Monthly Housekeeping Calls: (700 / 100) * 31 = 217 API Calls
