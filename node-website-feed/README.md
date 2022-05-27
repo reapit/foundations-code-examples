@@ -125,23 +125,14 @@ As per above, API calls are charged on a sliding scale and get cheaper the more 
 Based on this example, basis 2 endpoints (properties and property images), you would be charged as follows:
 
 ```
-Month 1 Total Calls: 6281
-
-1000 calls @ £0.01 = £10
-1500 calls @ £0.008 = £12
-2500 calls @ £0.006 = £15
-1281 calls @ £0.005 = £6.41
-
-Month 1 Total Calls: £43.41
-
-Ongoing Total Calls: 6169
-
 1000 calls @ £0.01 = £10
 1500 calls @ £0.008 = £12
 2500 calls @ £0.006 = £15
 1169 calls @ £0.005 = £5.85
 
 Ongoing Total Calls: £42.85
+
+Initial Seed Month 1: 112 calls @ 0.005 = £0.56
 ```
 
 #### **Managing Costs**
