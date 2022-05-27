@@ -29,16 +29,16 @@ Fetch all properties and embedded property images in a paged response, and commi
 The following query will fetch all properties where;
 
 - The selling status is `forSale` - you can specify other statuses as you wish eg `underOffer`
-- The letting status is `toLet` and `currentlyAvailable` - as above, you can specify additional statuses
+- The letting status is `toLet` and `tenancyCurrent` - as above, you can specify additional statuses
 - The customer has specified `internetAdvertising` is true
 - The page size is 100, and the page number is 1 - you will need to increment the page number until no more properties match your query
 - Embed property images. This will return all property images associated to each property. You should store these in a separate location in your database.
 
 ```ts
-'https://platform.reapit.cloud/properties?sellingStatus=forSale&lettingStatus=toLet&lettingStatus=currentlyAvailable&internetAdvertising=true&embed=images&pageSize=100&pageNumber=1'
+'https://platform.reapit.cloud/properties?sellingStatus=forSale&lettingStatus=toLet&lettingStatus=tenancyCurrent&internetAdvertising=true&embed=images&pageSize=100&pageNumber=1'
 ```
 
-When you have seeded your DB, you can use this data to serve your website, removing the need to make a round trip for the properties from our APIs each time, thus keeping you costs to a minimum.
+When you have seeded your DB, you can use this data to serve your website, removing the need to make a round trip for the properties from our APIs each time, thus keeping your costs to a minimum.
 
 #### 2. **On a schedule, fetch the properties that change**
 
@@ -48,20 +48,20 @@ The following query will fetch the properties where;
 
 - The selling status, letting status, internet advertising and paging are as per the seed at stage 1
 - Images **are not** embedded in the property as it would fetch all images regardless of whether they change or not
-- The modified dates too and from match the last hour. This assumes that you will run your scheduled job every hour - you can adjust the timeframe based on how up to date you need your data to be however, more frequent fetching will result in greater cost.
+- The modified from date covers the last hour. This assumes that you will run your scheduled job every hour - you can adjust the timeframe based on how up to date you need your data to be however, more frequent fetching will result in greater cost.
 
 ```ts
-'https://platform.reapit.cloud/properties?sellingStatus=forSale&lettingStatus=toLett&lettingStatus=currentlyAvailable&internetAdvertising=true&pageSize=100&pageNumber=1&modifiedFrom=2022-05-26T10:38:06.581Z&modifiedTo=2022-05-26T11:38:06.581Z'
+'https://platform.reapit.cloud/properties?sellingStatus=forSale&lettingStatus=toLett&lettingStatus=tenancyCurrent&internetAdvertising=true&pageSize=100&pageNumber=1&modifiedFrom=2022-05-26T10:38:06.581Z'
 ```
 
 The following query will fetch the property images where;
 
 - The paging is as per the seed at stage 1
-- The modified dates too and from match the last hour as per properties
+- The modified date from matches the last hour as per properties
 - The `propertyId` values (represented as foo, bar & baz), are the ids of the properties in your DB. You should break the query into batches of 100 propertyIds at a time to avoid timeouts and use paging to return all images changed.
 
 ```ts
-'https://platform.reapit.cloud/propertyImages?propertyId=foo&propertyId=bar&propertyId=baz&pageSize=100&pageNumber=1&modifiedFrom=2022-05-26T10:38:06.581Z&modifiedTo=2022-05-26T11:38:06.581Z'
+'https://platform.reapit.cloud/propertyImages?propertyId=foo&propertyId=bar&propertyId=baz&pageSize=100&pageNumber=1&modifiedFrom=2022-05-26T10:38:06.581'
 ```
 
 In both cases, when you have received your updated properties, you should update the corresponding records in your database.
@@ -93,7 +93,7 @@ p = initial seed of live properties for agent = 700
 i = average number of images per property = 15
 n = number of paged items per API call = 100
 
-Calculation: ((p / n) + ((p * i) / n) * b
+Calculation: ((p / n) + (p * i)) / n
 
 Initial seed calls: (700 / 100) + ((700 * 15) / 100 = 112 API Calls
 ```
@@ -110,10 +110,10 @@ h = hours in day running scheduled job = 24
 
 
 Calculation Scheduled Calls Per Month: ((c / n) + ((p / n) * (i / n)) * h ) * d
-Calculation Monthly Housekeeping Calls: ((p / n) * b) * d
+Calculation Monthly Housekeeping Calls: (p / n) * b
 
 Scheduled Calls Per Month: ((100 / 100) + ((700 / 100) * (100 / 100)) * 24) * 31 = 5952 API Calls
-Monthly Housekeeping Calls: (700 / 100) * 24 = 217 API Calls
+Monthly Housekeeping Calls: (700 / 100) * 31 = 217 API Calls
 
 Total Rolling Monthly Calls: 6169 API Calls
 ```
@@ -148,11 +148,11 @@ Ongoing Total Calls: £42.85
 
 As previously stated, we based these numbers on a real world example of an SME agent with 8 offices and around 700 properties on their website. Your use case may differ significantly and adjusting the variables will effect your calls and therefore costs significantly.
 
-Before starting work on a website project, we urge developers to consider the ongoing costs incurred and how you can optimise your code to
+Before starting work on a website project, we urge developers to consider the ongoing costs incurred and how you can optimise your code to minimise these costs.
 
 For example, we have assumed updating the website every hour, 24 hours a day, 7 days a week. You can halve you API calls by only updating 7am - 7pm during working hours, and further reduce them by not updating on a Sunday.
 
-Perhaps you don't need the site to update every hour and every two hours is adequate. In this case, simply adjust your scheduled job and the date time range of the modifiedFrom and modifiedTo filters.
+Perhaps you don't need the site to update every hour and every two hours is adequate. In this case, simply adjust your scheduled job and the date time range of the modifiedFrom filter.
 
 Maybe you don't need 700 properties on your site, in this case, you can combine API filters or limit the number set for internet marketing inside AgencyCloud, with a corresponding impact on calls and cost.
 
