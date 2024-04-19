@@ -1,4 +1,4 @@
-const { ReapitConnectServerSession } = require('@reapit/connect-session')
+const { ReapitConnectServerSession } = require('@reapit/connect-session-server')
 
 const reapitConnectSession = new ReapitConnectServerSession({
   connectClientId: process.env.CONNECT_CLIENT_ID,
