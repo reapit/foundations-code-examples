@@ -11,10 +11,10 @@
   "license": "MIT",
   "dependencies": {
     "@reapit/connect-session-server": "^1.0.0",
-    "@reapit/elements": "^3.8.2",
-    "axios": "^0.27.2",
-    "dotenv": "^16.0.0",
-    "express": "^4.18.1",
+    "@reapit/elements": "^4.3.0",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "hbs": "^4.2.0"
   },
   "devDependencies": {
