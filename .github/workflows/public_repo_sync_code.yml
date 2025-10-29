@@ -5,8 +5,7 @@ on:
 
 jobs:
   sync-code:
-    uses: reapit-global/uk-devops-reusable-workflows/.github/workflows/public_repo_sync_code.yml@ACP-4169
-    secrets: inherit
+    uses: reapit-global/uk-devops-reusable-workflows/.github/workflows/public_repo_sync_code.yml@06feb189699a7751a163b66f72deead8a4921917
     with:
       public_org: "reapit"
       public_repo: "foundations-code-examples"
