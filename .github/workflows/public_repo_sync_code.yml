@@ -1,0 +1,12 @@
+name: Sync Code to Public Repo
+on:
+  push:
+    branches: [main]
+
+jobs:
+  sync-code:
+    uses: reapit-global/uk-devops-reusable-workflows/.github/workflows/public_repo_sync_code.yml@ACP-4169
+    secrets: inherit
+    with:
+      public_org: "reapit"
+      public_repo: "foundations-code-examples"
